@@ -1,0 +1,809 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#10131b" />
+  <meta
+    name="description"
+    content="暗黑模式审计局：通过交互式注意实验，审计数字界面如何影响用户选择。"
+  />
+  <title>暗黑模式审计局 | Dark Pattern Auditing Bureau</title>
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- WebGazer：仅在用户同意并主动启用眼动功能后初始化 -->
+  <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
+</head>
+
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="暗黑模式审计局首页">
+      <span class="brand-mark">DA</span>
+      <span class="brand-text">
+        <strong>DARK PATTERN</strong>
+        <small>AUDITING BUREAU</small>
+      </span>
+    </a>
+
+    <div class="topbar-right">
+      <span class="system-status">
+        <span class="status-dot"></span>
+        SYSTEM ONLINE
+      </span>
+      <span class="topbar-version">FIELD STUDY / 2026</span>
+    </div>
+  </header>
+
+  <main class="app-shell">
+
+    <!-- =========================
+         01. 首页
+    ========================== -->
+    <section id="homeScreen" class="screen active">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            DIGITAL EXPERIENCE INVESTIGATION
+          </div>
+
+          <h1>
+            你以为你在<br />
+            <span class="gradient-text">自由选择？</span>
+          </h1>
+
+          <p class="hero-description">
+            有些界面并不希望你做出最符合自己意愿的选择。
+            它们通过视觉显著性、信息布局与交互线索，
+            悄悄改变你的注意分配和决策路径。
+          </p>
+
+          <p class="hero-description secondary">
+            现在，你将以高级 UX 体验审计官的身份，
+            对一个模拟健身应用进行交互审查。
+          </p>
+
+          <div class="hero-actions">
+            <button id="enterBtn" class="btn btn-primary">
+              进入审计任务
+              <span class="btn-arrow">→</span>
+            </button>
+            <span class="hero-meta">预计 15–25 分钟 · 两项交互任务</span>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="scanner-ring ring-one"></div>
+          <div class="scanner-ring ring-two"></div>
+          <div class="scanner-ring ring-three"></div>
+
+          <div class="hero-card">
+            <div class="hero-card-header">
+              <span>INTERFACE AUDIT</span>
+              <span class="live-tag">LIVE</span>
+            </div>
+
+            <div class="hero-card-main">
+              <div class="target-icon">⌖</div>
+              <div class="hero-card-title">ATTENTION</div>
+              <div class="hero-card-subtitle">IS BEING MANIPULATED</div>
+            </div>
+
+            <div class="hero-card-footer">
+              <span>VISUAL SEARCH</span>
+              <span>UI CONFLICT</span>
+              <span>GAZE TRACKING</span>
+            </div>
+          </div>
+
+          <div class="floating-label label-top">
+            <span class="mini-dot"></span>
+            VISUAL SALIENCE
+          </div>
+
+          <div class="floating-label label-bottom">
+            <span class="mini-dot warning"></span>
+            DECISION CONFLICT
+          </div>
+        </div>
+      </div>
+
+      <div class="mission-strip">
+        <div class="mission-item">
+          <span class="mission-number">01</span>
+          <div>
+            <strong>寻找隐藏选项</strong>
+            <small>视觉搜索与注意分配</small>
+          </div>
+        </div>
+
+        <div class="mission-divider"></div>
+
+        <div class="mission-item">
+          <span class="mission-number">02</span>
+          <div>
+            <strong>识别交互冲突</strong>
+            <small>UI Stroop 与反应控制</small>
+          </div>
+        </div>
+
+        <div class="mission-divider"></div>
+
+        <div class="mission-item">
+          <span class="mission-number">03</span>
+          <div>
+            <strong>完成体验审计</strong>
+            <small>行为与眼动数据分析</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="disclaimer">
+        <span class="disclaimer-icon">ⓘ</span>
+        本项目为教学研究模拟任务。所有健身应用界面均为虚构，
+        不涉及真实会员购买或订阅操作。
+      </div>
+    </section>
+
+    <!-- =========================
+         02. 被试信息与知情同意
+    ========================== -->
+    <section id="consentScreen" class="screen">
+      <div class="section-heading">
+        <div class="eyebrow">STEP 01 / PARTICIPANT REGISTRATION</div>
+        <h2>审计官身份确认</h2>
+        <p>请填写匿名编号并阅读实验说明。</p>
+      </div>
+
+      <div class="content-card registration-card">
+        <div class="card-heading">
+          <span class="card-index">A</span>
+          <div>
+            <h3>建立审计档案</h3>
+            <p>本任务不收集姓名、手机号等直接身份信息。</p>
+          </div>
+        </div>
+
+        <label class="field-label" for="participantId">
+          被试编号 <span class="required-mark">*</span>
+        </label>
+
+        <input
+          id="participantId"
+          class="text-input"
+          type="text"
+          maxlength="32"
+          placeholder="例如：P001"
+          autocomplete="off"
+        />
+
+        <p class="field-hint">
+          请使用研究者分配的匿名编号；如果没有分配，请按课程要求自行填写唯一编号。
+        </p>
+
+        <div class="card-divider"></div>
+
+        <div class="card-heading">
+          <span class="card-index">B</span>
+          <div>
+            <h3>知情同意</h3>
+            <p>请在开始实验前确认以下事项。</p>
+          </div>
+        </div>
+
+        <div class="consent-text">
+          <p>
+            本实验旨在考察数字界面中的视觉线索、交互设计与用户注意及反应行为之间的关系。
+            实验包含两项计算机交互任务，系统将记录任务中的选择、反应时间和实验条件。
+          </p>
+          <p>
+            如果你主动同意启用摄像头眼动估计功能，浏览器将通过摄像头获取面部图像，
+            使用 WebGazer 在本地估计视线位置。该功能属于近似估计，并不等同于专业眼动仪。
+            请注意查看后续摄像头授权提示。
+          </p>
+          <p>
+            参与完全自愿。你可以随时停止任务。实验结果使用匿名编号整理，
+            不应在公开仓库或报告中包含可识别个人身份的信息。
+          </p>
+          <p>
+            如果你不启用眼动功能，仍可完成全部行为实验。
+          </p>
+        </div>
+
+        <label class="check-row">
+          <input id="consentCheck" type="checkbox" />
+          <span>
+            我已阅读实验说明，自愿参与本次教学实验，并同意记录匿名行为数据。
+          </span>
+        </label>
+
+        <label class="check-row optional-check">
+          <input id="gazeConsentCheck" type="checkbox" />
+          <span>
+            我自愿启用摄像头眼动估计功能。我理解其精度有限，并可以选择不启用。
+          </span>
+        </label>
+
+        <div class="button-row">
+          <button id="backHomeBtn" class="btn btn-ghost">返回首页</button>
+          <button id="continueConsentBtn" class="btn btn-primary">
+            确认并继续 →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         03. 眼动功能说明
+    ========================== -->
+    <section id="eyeIntroScreen" class="screen">
+      <div class="section-heading">
+        <div class="eyebrow">STEP 02 / GAZE TRACKING SETUP</div>
+        <h2>眼动设备检查</h2>
+        <p>在开始任务前，先检查浏览器和摄像头状态。</p>
+      </div>
+
+      <div class="content-card">
+        <div class="eye-intro-layout">
+          <div class="eye-illustration">
+            <div class="eye-outer">
+              <div class="eye-inner">
+                <div class="eye-pupil"></div>
+              </div>
+            </div>
+            <span class="eye-caption">GAZE ESTIMATION</span>
+          </div>
+
+          <div class="eye-instructions">
+            <h3>关于眼动估计</h3>
+            <p>
+              本项目使用 WebGazer 根据摄像头图像估计视线位置。
+              为提高估计质量，你需要依次完成校准和独立验证。
+            </p>
+
+            <ul class="instruction-list">
+              <li>尽量坐在光线均匀的环境中。</li>
+              <li>保持面部完整出现在摄像头画面中。</li>
+              <li>实验过程中尽量不要移动屏幕或摄像头。</li>
+              <li>校准时按照提示注视屏幕上的目标点。</li>
+            </ul>
+
+            <div class="notice-box">
+              <strong>重要提示</strong>
+              <p>
+                眼动估计不是医疗或专业诊断工具。如果校准或验证失败，
+                你仍可以继续完成行为任务，系统会记录眼动数据质量状态。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="system-check-list">
+          <div class="system-check-row">
+            <span>安全上下文（HTTPS）</span>
+            <strong id="secureContextStatus" class="check-status">待检测</strong>
+          </div>
+          <div class="system-check-row">
+            <span>浏览器摄像头接口</span>
+            <strong id="cameraApiStatus" class="check-status">待检测</strong>
+          </div>
+          <div class="system-check-row">
+            <span>WebGazer 脚本</span>
+            <strong id="webgazerStatus" class="check-status">待检测</strong>
+          </div>
+          <div class="system-check-row">
+            <span>摄像头授权</span>
+            <strong id="cameraPermissionStatus" class="check-status">尚未授权</strong>
+          </div>
+        </div>
+
+        <div id="eyeSetupMessage" class="inline-message" role="status">
+          请先检查设备环境。
+        </div>
+
+        <div class="button-row">
+          <button id="skipEyeBtn" class="btn btn-ghost">
+            跳过眼动，继续行为实验
+          </button>
+          <button id="startEyeBtn" class="btn btn-primary">
+            启用摄像头并开始校准
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         04. 眼动校准
+    ========================== -->
+    <section id="calibrationScreen" class="screen calibration-screen">
+      <div class="calibration-top">
+        <div>
+          <div class="eyebrow">STEP 03 / CALIBRATION</div>
+          <h2>眼动校准</h2>
+          <p>请依次注视屏幕上的圆点，并按照说明点击。</p>
+        </div>
+
+        <div class="calibration-counter">
+          <strong id="calibrationProgress">0 / 45</strong>
+          <small>CALIBRATION CLICKS</small>
+        </div>
+      </div>
+
+      <div class="calibration-instructions">
+        <span class="instruction-symbol">◎</span>
+        <span>
+          将视线移动到圆点中心，保持注视约 1 秒，再点击圆点。
+          每个位置需要点击 5 次。
+        </span>
+      </div>
+
+      <div id="calibrationArea" class="calibration-area">
+        <div class="calibration-crosshair"></div>
+        <button
+          id="calibrationPoint"
+          class="calibration-point"
+          type="button"
+          aria-label="眼动校准点"
+        ></button>
+      </div>
+
+      <div class="calibration-footer">
+        <span id="calibrationHint">等待启动校准……</span>
+        <button id="restartCalibrationBtn" class="btn btn-small btn-ghost">
+          重新校准
+        </button>
+      </div>
+    </section>
+
+    <!-- =========================
+         05. 眼动验证
+    ========================== -->
+    <section id="validationScreen" class="screen calibration-screen">
+      <div class="calibration-top">
+        <div>
+          <div class="eyebrow">STEP 04 / VALIDATION</div>
+          <h2>独立精度验证</h2>
+          <p>验证使用不同于校准的测量步骤，评估估计误差。</p>
+        </div>
+
+        <div class="calibration-counter">
+          <strong id="validationProgress">0 / 5</strong>
+          <small>VALIDATION POINTS</small>
+        </div>
+      </div>
+
+      <div class="calibration-instructions">
+        <span class="instruction-symbol">⌖</span>
+        <span>
+          请先注视屏幕上的目标点。系统会先收集一段时间的视线预测数据，
+          然后才允许你点击确认。
+        </span>
+      </div>
+
+      <div id="validationArea" class="calibration-area">
+        <div class="calibration-crosshair"></div>
+        <div id="validationTarget" class="validation-target"></div>
+      </div>
+
+      <div class="calibration-footer">
+        <span id="validationHint">准备开始验证……</span>
+        <span id="validationError" class="validation-error"></span>
+      </div>
+
+      <div class="validation-actions">
+        <button id="retryValidationBtn" class="btn btn-ghost">
+          重新验证
+        </button>
+        <button id="continueAfterValidationBtn" class="btn btn-primary" disabled>
+          继续实验 →
+        </button>
+      </div>
+    </section>
+
+    <!-- =========================
+         06. 实验总说明
+    ========================== -->
+    <section id="briefingScreen" class="screen">
+      <div class="section-heading">
+        <div class="eyebrow">MISSION BRIEFING</div>
+        <h2>审计任务简报</h2>
+        <p>请认真阅读任务规则。正式实验开始后，请尽可能又快又准确地完成任务。</p>
+      </div>
+
+      <div class="mission-cards">
+        <article class="mission-card">
+          <div class="mission-card-number">01</div>
+          <div class="mission-card-icon">⌕</div>
+          <h3>视觉搜索审计</h3>
+          <p>
+            你将看到一个模拟健身 App 页面。每次任务中，请尽快找到指定的
+            “暂不领取”选项并点击。
+          </p>
+          <div class="mission-tag">VISUAL SEARCH</div>
+        </article>
+
+        <article class="mission-card">
+          <div class="mission-card-number">02</div>
+          <div class="mission-card-icon">⇄</div>
+          <h3>交互冲突审计</h3>
+          <p>
+            你将看到一系列取消订阅界面。请根据按钮文字的实际含义作答，
+            不要仅凭按钮颜色判断。
+          </p>
+          <div class="mission-tag">UI STROOP</div>
+        </article>
+      </div>
+
+      <div class="notice-box briefing-notice">
+        <strong>实验注意事项</strong>
+        <ul>
+          <li>请尽量保持坐姿和观看距离稳定。</li>
+          <li>每次任务开始前，屏幕会出现注视点，请先注视中心。</li>
+          <li>请按照屏幕指示完成任务，不要刷新或关闭页面。</li>
+          <li>任务期间请不要使用浏览器缩放功能。</li>
+          <li>如果出现错误，请联系实验组织者，不要重复提交同一份数据。</li>
+        </ul>
+      </div>
+
+      <div class="button-row">
+        <button id="backEyeBtn" class="btn btn-ghost">返回设备设置</button>
+        <button id="beginExperimentBtn" class="btn btn-primary">
+          开始第一项任务 →
+        </button>
+      </div>
+    </section>
+
+    <!-- =========================
+         07. 实验任务通用界面
+    ========================== -->
+    <section id="taskScreen" class="screen task-screen">
+      <div class="task-header">
+        <div class="task-identity">
+          <span class="task-logo">DA</span>
+          <div>
+            <strong>DARK PATTERN AUDIT</strong>
+            <small id="taskSubtitle">MISSION 01 / VISUAL SEARCH</small>
+          </div>
+        </div>
+
+        <div class="task-progress">
+          <div class="task-progress-label">
+            <span id="trialCounter">TRIAL 1 / 40</span>
+            <span id="taskPercent">0%</span>
+          </div>
+          <div class="progress-track">
+            <div id="taskProgressBar" class="progress-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="task-instruction-bar">
+        <div class="task-instruction-icon">!</div>
+        <div>
+          <strong id="taskInstructionTitle">任务指令</strong>
+          <p id="taskInstructionText">请按照屏幕提示完成任务。</p>
+        </div>
+      </div>
+
+      <!-- 注视点阶段：独立空白屏 -->
+      <div id="fixationStage" class="fixation-stage">
+        <div class="fixation-label">请注视屏幕中心</div>
+        <div class="fixation-cross">
+          <span></span>
+          <span></span>
+        </div>
+        <div class="fixation-subtitle">PLEASE FIXATE</div>
+      </div>
+
+      <!-- 实验一：视觉搜索刺激 -->
+      <div id="visualSearchStage" class="task-stage" hidden>
+        <div class="mock-app-shell">
+          <div class="mock-app-topbar">
+            <div class="mock-app-brand">
+              <span class="mock-app-symbol">F</span>
+              <span>FITCORE</span>
+            </div>
+            <div class="mock-app-top-links">
+              <span>训练计划</span>
+              <span>会员中心</span>
+              <span>我的账户</span>
+            </div>
+            <div class="mock-avatar">U</div>
+          </div>
+
+          <div class="mock-app-body">
+            <aside class="mock-sidebar">
+              <div class="sidebar-user">
+                <div class="sidebar-avatar">U</div>
+                <div>
+                  <strong>高级会员</strong>
+                  <small>MEMBER ID 0826</small>
+                </div>
+              </div>
+
+              <div class="sidebar-menu">
+                <span>▦　概览</span>
+                <span>◷　训练记录</span>
+                <span>♧　健康数据</span>
+                <span>▤　课程商城</span>
+                <span>⚙　账户设置</span>
+              </div>
+
+              <div class="sidebar-bottom">
+                <small>FITCORE VERSION 4.8</small>
+              </div>
+            </aside>
+
+            <div class="mock-main-content">
+              <div class="mock-welcome">
+                <div>
+                  <small>MONDAY / MEMBER DASHBOARD</small>
+                  <h3>下午好，欢迎回来</h3>
+                  <p>今天也为自己安排一点运动时间吧。</p>
+                </div>
+                <div class="mock-streak">
+                  <strong>12</strong>
+                  <span>连续训练天数</span>
+                </div>
+              </div>
+
+              <div class="mock-stats-grid">
+                <div class="mock-stat">
+                  <small>本周训练</small>
+                  <strong>04 <em>/ 05</em></strong>
+                  <span>距离目标还差一次</span>
+                </div>
+                <div class="mock-stat">
+                  <small>累计时长</small>
+                  <strong>235 <em>min</em></strong>
+                  <span>较上周增加 8%</span>
+                </div>
+                <div class="mock-stat">
+                  <small>消耗热量</small>
+                  <strong>1,280 <em>kcal</em></strong>
+                  <span>数据仅供参考</span>
+                </div>
+              </div>
+
+              <div class="mock-section-heading">
+                <strong>为你推荐</strong>
+                <small>PERSONALIZED FOR YOU</small>
+              </div>
+
+              <div class="mock-recommend-grid">
+                <div class="mock-recommend-card recommend-purple">
+                  <span>HOT COURSE</span>
+                  <strong>力量进阶训练</strong>
+                  <small>12 节课程 · 适合进阶用户</small>
+                </div>
+                <div class="mock-recommend-card recommend-orange">
+                  <span>WEEKLY PLAN</span>
+                  <strong>七日燃脂挑战</strong>
+                  <small>每日 25 分钟 · 立即加入</small>
+                </div>
+              </div>
+
+              <div class="mock-section-heading">
+                <strong>会员权益与活动</strong>
+                <small>MEMBERSHIP & OFFERS</small>
+              </div>
+
+              <div id="searchContentGrid" class="search-content-grid">
+                <!-- app.js 动态生成页面内容和目标选项 -->
+              </div>
+
+              <div class="mock-legal">
+                本服务内容由 FITCORE 模拟系统提供。会员权益、课程价格及活动规则
+                仅用于实验展示。继续使用即表示你已阅读相关服务条款与隐私政策。
+                服务协议 · 隐私政策 · 会员规则 · 账户管理
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 实验二：UI Stroop 刺激 -->
+      <div id="conflictStage" class="task-stage conflict-stage" hidden>
+        <div class="cancel-app-window">
+          <div class="cancel-app-topbar">
+            <div class="mock-app-brand">
+              <span class="mock-app-symbol">F</span>
+              <span>FITCORE MEMBERSHIP</span>
+            </div>
+            <span class="cancel-window-label">ACCOUNT SETTINGS</span>
+          </div>
+
+          <div class="cancel-app-content">
+            <div class="cancel-breadcrumb">
+              我的账户 <span>›</span> 会员管理 <span>›</span> 订阅设置
+            </div>
+
+            <div class="cancel-heading">
+              <div class="cancel-icon">⚙</div>
+              <div>
+                <h3>管理你的会员订阅</h3>
+                <p>你可以在这里查看或调整会员服务。</p>
+              </div>
+            </div>
+
+            <div class="subscription-card">
+              <div class="subscription-main">
+                <div class="subscription-badge">ACTIVE</div>
+                <strong>FITCORE 高级会员</strong>
+                <span>月度订阅 · 自动续费</span>
+              </div>
+              <div class="subscription-price">
+                <strong>¥ 38</strong>
+                <small>/ 月</small>
+              </div>
+            </div>
+
+            <div class="cancel-warning">
+              <strong>请注意</strong>
+              <p>
+                取消订阅后，你将无法继续使用部分高级课程、训练记录分析
+                及个性化训练服务。当前计费周期内的权益按页面规则处理。
+              </p>
+            </div>
+
+            <div class="cancel-question">
+              <h3>你希望如何处理当前订阅？</h3>
+              <p>请根据按钮文字的含义，选择符合任务指令的选项。</p>
+            </div>
+
+            <div id="conflictButtonArea" class="conflict-button-area">
+              <!-- app.js 动态生成两个语义按钮 -->
+            </div>
+
+            <div id="consequenceHint" class="consequence-hint" hidden>
+              <!-- 改进条件：hover 后出现具体后果提示 -->
+            </div>
+
+            <div class="cancel-footer">
+              FITCORE · 会员服务中心 · 帮助与反馈
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 实验反馈 -->
+      <div id="trialFeedback" class="trial-feedback" hidden>
+        <span id="feedbackIcon" class="feedback-icon">✓</span>
+        <strong id="feedbackTitle">选择正确</strong>
+        <span id="feedbackDetail">请准备下一次任务。</span>
+      </div>
+
+      <div class="task-bottom-bar">
+        <span id="taskBottomLeft">AUDIT SESSION IN PROGRESS</span>
+        <span id="taskBottomRight">PLEASE FOLLOW THE INSTRUCTIONS</span>
+      </div>
+    </section>
+
+    <!-- =========================
+         08. 实验结束
+    ========================== -->
+    <section id="experimentEndScreen" class="screen">
+      <div class="completion-hero">
+        <div class="completion-symbol">✓</div>
+        <div class="eyebrow">MISSION COMPLETED</div>
+        <h2 id="completionTitle">本项审计任务已完成</h2>
+        <p id="completionDescription">
+          感谢你的参与。系统正在整理本次任务的行为数据。
+        </p>
+      </div>
+
+      <div class="content-card result-card">
+        <div class="result-heading">
+          <div>
+            <h3>本次任务表现</h3>
+            <p>以下数据仅反映本次任务，不代表个人能力评价。</p>
+          </div>
+          <span class="result-stamp">AUDIT LOG</span>
+        </div>
+
+        <div class="result-metrics">
+          <div class="result-metric">
+            <small>完成试次</small>
+            <strong id="resultTrials">—</strong>
+          </div>
+          <div class="result-metric">
+            <small>正确率</small>
+            <strong id="resultAccuracy">—</strong>
+          </div>
+          <div class="result-metric">
+            <small>平均反应时</small>
+            <strong id="resultRT">—</strong>
+          </div>
+        </div>
+
+        <div class="upload-panel">
+          <div class="upload-panel-header">
+            <span class="upload-indicator"></span>
+            <strong>数据提交状态</strong>
+          </div>
+          <p id="uploadStatusText">等待提交……</p>
+          <div class="upload-actions">
+            <button id="retryUploadBtn" class="btn btn-small btn-ghost" hidden>
+              重试上传
+            </button>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button id="continueNextExperimentBtn" class="btn btn-primary">
+            继续下一项任务 →
+          </button>
+          <button id="finishAllBtn" class="btn btn-ghost" hidden>
+            完成全部任务
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+         09. 最终结束页面
+    ========================== -->
+    <section id="finalScreen" class="screen">
+      <div class="completion-hero final-hero">
+        <div class="completion-symbol">★</div>
+        <div class="eyebrow">AUDIT REPORT / CLOSED</div>
+        <h2>审计任务全部完成</h2>
+        <p>
+          感谢你参与本次数字界面注意实验。
+          你的匿名数据将用于课程教学与实验分析。
+        </p>
+      </div>
+
+      <div class="content-card final-report-card">
+        <h3>审计档案摘要</h3>
+
+        <div class="final-report-row">
+          <span>被试编号</span>
+          <strong id="finalParticipantId">—</strong>
+        </div>
+        <div class="final-report-row">
+          <span>实验一状态</span>
+          <strong id="finalExp1Status">—</strong>
+        </div>
+        <div class="final-report-row">
+          <span>实验二状态</span>
+          <strong id="finalExp2Status">—</strong>
+        </div>
+        <div class="final-report-row">
+          <span>眼动数据质量</span>
+          <strong id="finalGazeStatus">—</strong>
+        </div>
+
+        <div class="notice-box">
+          <strong>数据说明</strong>
+          <p>
+            本页面显示的是个人任务完成情况。研究层面的统计分析
+            需要汇总多名参与者的数据后进行，不能仅凭单个被试结果得出结论。
+          </p>
+        </div>
+
+        <button id="returnHomeBtn" class="btn btn-primary btn-block">
+          返回首页
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>DARK PATTERN AUDITING BUREAU</span>
+    <span>ENGINEERING PSYCHOLOGY / ATTENTION LAB</span>
+  </footer>
+
+  <!-- 全局消息提示 -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- 后续 app.js 会统一控制页面状态 -->
+  <script src="app.js"></script>
+</body>
+</html>
